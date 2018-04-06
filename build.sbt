@@ -37,6 +37,8 @@ inThisBuild(Def.settings(
     // "-Yno-adapted-args", //akka-http heavily depends on adapted args and => Unit implicits break otherwise
     "-Ywarn-dead-code"
     // "-Xfuture" // breaks => Unit implicits
+    ,"-Ywarn-unused-import"
+    ,"-Yrangepos", "-Xplugin-require:semanticdb"
   ),
   javacOptions ++= Seq(
     "-encoding", "UTF-8"
