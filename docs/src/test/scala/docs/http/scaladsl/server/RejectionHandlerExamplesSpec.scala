@@ -75,8 +75,7 @@ class RejectionHandlerExamplesSpec extends RoutingSpec {
     //#example-1
     import akka.http.scaladsl.coding.Gzip
 
-    val route =
-      path("order") {
+    path("order") {
         get {
           complete("Received GET")
         } ~

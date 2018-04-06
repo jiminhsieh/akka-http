@@ -21,7 +21,7 @@ class BlockingInHttpExamplesSpec extends WordSpec with CompileOnlySpec
     // BAD (due to blocking in Future, on default dispatcher)
     implicit val defaultDispatcher = system.dispatcher
 
-    val routes: Route = post {
+    post {
       complete {
         Future { // uses defaultDispatcher
           Thread.sleep(5000) // will block on default dispatcher,
@@ -39,7 +39,7 @@ class BlockingInHttpExamplesSpec extends WordSpec with CompileOnlySpec
     // GOOD (the blocking is now isolated onto a dedicated dispatcher):
     implicit val blockingDispatcher = system.dispatchers.lookup("my-blocking-dispatcher")
 
-    val routes: Route = post {
+    post {
       complete {
         Future { // uses the good "blocking dispatcher" that we configured,
           // instead of the default dispatcher to isolate the blocking.

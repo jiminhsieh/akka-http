@@ -200,7 +200,7 @@ class HttpClientExampleSpec extends WordSpec with Matchers with CompileOnlySpec 
       }
     }
 
-    val responseFuture: Future[HttpResponse] = queueRequest(HttpRequest(uri = "/"))
+    queueRequest(HttpRequest(uri = "/"))
     //#host-level-queue-example
   }
 

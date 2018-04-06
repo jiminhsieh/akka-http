@@ -32,11 +32,10 @@ class HttpServerExampleSpec extends WordSpec with Matchers
 
     val serverSource: Source[Http.IncomingConnection, Future[Http.ServerBinding]] =
       Http().bind(interface = "localhost", port = 8080)
-    val bindingFuture: Future[Http.ServerBinding] =
-      serverSource.to(Sink.foreach { connection => // foreach materializes the source
-        println("Accepted new connection from " + connection.remoteAddress)
-        // ... and then actually handle the connection
-      }).run()
+    serverSource.to(Sink.foreach { connection => // foreach materializes the source
+      println("Accepted new connection from " + connection.remoteAddress)
+      // ... and then actually handle the connection
+    }).run()
     //#binding-example
   }
 
@@ -210,14 +209,13 @@ class HttpServerExampleSpec extends WordSpec with Matchers
         HttpResponse(404, entity = "Unknown resource!")
     }
 
-    val bindingFuture: Future[Http.ServerBinding] =
-      serverSource.to(Sink.foreach { connection =>
-        println("Accepted new connection from " + connection.remoteAddress)
+    serverSource.to(Sink.foreach { connection =>
+      println("Accepted new connection from " + connection.remoteAddress)
 
-        connection handleWithSyncHandler requestHandler
-        // this is equivalent to
-        // connection handleWith { Flow[HttpRequest] map requestHandler }
-      }).run()
+      connection handleWithSyncHandler requestHandler
+      // this is equivalent to
+      // connection handleWith { Flow[HttpRequest] map requestHandler }
+    }).run()
     //#full-server-example
   }
 
@@ -598,8 +596,7 @@ class HttpServerExampleSpec extends WordSpec with Matchers
     // these are from spray-json
     implicit val bidFormat = jsonFormat2(Bid)
 
-    val route =
-      path("bid") {
+    path("bid") {
         put {
           entity(as[Bid]) { bid =>
             // incoming entity is fully consumed and converted into a Bid
@@ -623,8 +620,7 @@ class HttpServerExampleSpec extends WordSpec with Matchers
     // needed for the future flatMap/onComplete in the end
     implicit val executionContext = system.dispatcher
 
-    val route =
-      (put & path("lines")) {
+    (put & path("lines")) {
         withoutSizeLimit {
           extractDataBytes { bytes =>
             val finishedWriting = bytes.runWith(FileIO.toPath(new File("/tmp/example.out").toPath))
@@ -651,8 +647,7 @@ class HttpServerExampleSpec extends WordSpec with Matchers
     // needed for the future flatMap/onComplete in the end
     implicit val executionContext = system.dispatcher
 
-    val route =
-      (put & path("lines")) {
+    (put & path("lines")) {
         withoutSizeLimit {
           extractRequest { r: HttpRequest =>
             val finishedWriting = r.discardEntityBytes().future
@@ -680,8 +675,7 @@ class HttpServerExampleSpec extends WordSpec with Matchers
     // needed for the future flatMap/onComplete in the end
     implicit val executionContext = system.dispatcher
 
-    val route =
-      (put & path("lines")) {
+    (put & path("lines")) {
         withoutSizeLimit {
           extractDataBytes { data =>
             // Closing connections, method 1 (eager):

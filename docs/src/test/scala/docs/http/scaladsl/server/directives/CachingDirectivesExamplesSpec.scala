@@ -152,7 +152,7 @@ class CachingDirectivesExamplesSpec extends RoutingSpec {
         .withTimeToIdle(10.seconds)
     val cachingSettings = defaultCachingSettings.withLfuCacheSettings(lfuCacheSettings)
     val lfuCache: Cache[Uri, RouteResult] = LfuCache(cachingSettings)
-    val route = cache(lfuCache, keyerFunction)(innerRoute)
+    cache(lfuCache, keyerFunction)(innerRoute)
     //#create-cache
 
     // We don't test the eviction settings here. Deterministic testing of eviction is hard because
