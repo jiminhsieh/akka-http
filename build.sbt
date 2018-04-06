@@ -38,6 +38,7 @@ inThisBuild(Def.settings(
     "-Ywarn-dead-code"
     // "-Xfuture" // breaks => Unit implicits
     ,"-Ywarn-unused-import"
+    ,"-Ywarn-unused:locals,privates"
     ,"-Yrangepos", "-Xplugin-require:semanticdb"
   ),
   javacOptions ++= Seq(
