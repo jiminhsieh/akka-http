@@ -70,7 +70,8 @@ lazy val root = Project(
       Seq(
         scala -> s"www/api/akka-http/${version.value}",
         java -> s"www/japi/akka-http/${version.value}")
-    }
+    },
+    testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports")
   )
   .aggregate(
     parsing,
