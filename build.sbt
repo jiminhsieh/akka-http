@@ -71,7 +71,7 @@ lazy val root = Project(
         scala -> s"www/api/akka-http/${version.value}",
         java -> s"www/japi/akka-http/${version.value}")
     },
-    testOptions in Test += Seq(Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports"),
+    testOptions in Test ++= Seq(Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports"),
       Tests.Argument(TestFrameworks.ScalaTest, "-o")
     )
   )
